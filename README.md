@@ -50,8 +50,8 @@ El proyecto está compuesto por los siguientes servicios:
 
 1. Clonar el repositorio del proyecto:
    ```bash
-   git clone <repositorio>
-   cd <directorio-del-proyecto>
+   git clone https://github.com/tuusuario/systems-administration_docker-compose.git
+   cd systems-administration_docker-compose
    ```
 2. Construir y levantar los contenedores con Docker Compose:
    ```bash
@@ -81,10 +81,16 @@ El proyecto está compuesto por los siguientes servicios:
   curl http://localhost:8080/status
   ```
 
+## Funcionamiento de la página web
+La página principal está disponible en `http://localhost:8080/`. Para acceder a ella, primero debe iniciar sesión. Si no está autenticado, será redirigido automáticamente a `/login`, donde podrá iniciar sesión o registrarse si no tiene una cuenta. Una vez autenticado, podrá acceder a `/`, donde se mostrará el resultado de un `SELECT NOW()` para verificar la conexión con la base de datos, junto con un mensaje de estado de los servicios del sistema.
+
 ## Notas adicionales
 - **Variables de entorno**: Las credenciales de base de datos y la clave JWT se configuran mediante variables de entorno en el archivo `docker-compose.yml`.
 - **Caching**: Redis se utiliza para almacenar datos en caché y mejorar la eficiencia de las consultas frecuentes.
 
-## Contribuciones
-Las contribuciones son bienvenidas. Por favor, abre un _pull request_ o crea un _issue_ para discutir cualquier cambio que desees realizar.
+## Agregar Diagrama del Proyecto
+Para agregar el diagrama al README, coloca la imagen en el directorio principal y utiliza la siguiente sintaxis:
 
+```markdown
+![Arquitectura del Proyecto](./Arquitectura_del_project-docker-compose.png)
+```
