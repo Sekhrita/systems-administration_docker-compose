@@ -16,7 +16,7 @@ En el diagrama se puede observar cómo los diferentes componentes del proyecto i
 - **Redis** se usa como sistema de caching para la **Web App**.
 
 ### Flujo de Datos - JWT y Autenticación
-Cuando un usuario realiza un inicio de sesión, la **Web App** envía la solicitud al **Auth Service**. Si la autenticación es exitosa, el **Auth Service** devuelve una **cookie** que contiene un **token JWT** junto con los datos del usuario. En caso de error (credenciales incorrectas), se devuelve un mensaje de error (internamente) y no se otorga acceso al usuario.
+Cuando un usuario realiza un inicio de sesión, la **Web App** envía la solicitud al **Auth Service**. Si la autenticación es exitosa, el **Auth Service** devuelve una **cookie** que contiene un **token JWT** junto con los datos del usuario. En caso de error (credenciales incorrectas), se mantiene al usuario en `/login`.
 
 ## Requisitos previos
 ### Instación de Docker y Docker Compose (Debian)
@@ -154,11 +154,20 @@ El proyecto está compuesto por los siguientes servicios:
    git clone https://github.com/tuusuario/systems-administration_docker-compose.git
    cd systems-administration_docker-compose
    ```
-2. Construir y levantar los contenedores con Docker Compose:
+2. Inicializar el servicio Docker:
+   - WSL (Debian):
+   ```bash
+   sudo service docker start
+   ```
+   - Debian:
+   ```bash
+   sudo systemctl start docker
+   ```
+4. Construir y levantar los contenedores con Docker Compose:
    ```bash
    docker-compose up --build
    ```
-3. Acceder a la aplicación web a través de `http://localhost:8080`.
+5. Acceder a la aplicación web a través de `http://localhost:8080`.
 
 ## Probar los servicios
 
