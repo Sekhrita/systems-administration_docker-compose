@@ -19,9 +19,81 @@ En el diagrama se puede observar cómo los diferentes componentes del proyecto i
 Cuando un usuario realiza un inicio de sesión, la **Web App** envía la solicitud al **Auth Service**. Si la autenticación es exitosa, el **Auth Service** devuelve una **cookie** que contiene un **token JWT** junto con los datos del usuario. En caso de error (credenciales incorrectas), se devuelve un mensaje de error (internamente) y no se otorga acceso al usuario.
 
 ## Requisitos previos
+### Instación de Docker y Docker Compose (Debian)
+#### Paso 1: Actualizar el Sistema
+Antes de empezar, es importante actualizar la lista de paquetes y asegurarse de que todos estén actualizados:
+```bash
+sudo apt update && sudo apt upgrade -y
+```
 
-- Docker y Docker Compose instalados en el sistema.
-- Puertos disponibles: `8080` (Nginx), `3000` (Web App), `4000` (Auth Service), `5000` (System Status), `6380` (Redis).
+#### Paso 2: Instalar Dependencias Necesarias
+Instala algunas dependencias requeridas para agregar repositorios externos:
+```bash
+sudo apt install apt-transport-https ca-certificates curl software-properties-common -y
+```
+
+#### Paso 3: Agregar la Clave GPG de Docker
+Agrega la clave GPG oficial de Docker para garantizar la autenticidad del repositorio:
+```bash
+curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+```
+
+#### Paso 4: Agregar el Repositorio de Docker
+Añade el repositorio de Docker a las fuentes de tu sistema:
+```bash
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+```
+
+#### Paso 5: Instalar Docker Engine
+Actualiza la lista de paquetes nuevamente e instala Docker:
+```bash
+sudo apt update
+sudo apt install docker-ce docker-ce-cli containerd.io -y
+```
+
+Verifica que Docker esté instalado correctamente ejecutando el siguiente comando:
+```bash
+sudo docker --version
+```
+
+#### Paso 6: Habilitar Docker
+Para permitir que Docker se ejecute al iniciar el sistema:
+```bash
+sudo systemctl enable docker
+sudo systemctl start docker
+```
+
+#### Paso 7: Instalar Docker Compose
+Descarga la versión estable más reciente de Docker Compose:
+```bash
+sudo curl -L "https://github.com/docker/compose/releases/download/$(curl -s https://api.github.com/repos/docker/compose/releases/latest | grep -oP '"tag_name": "\K[^"]+')/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+```
+
+Otorga permisos de ejecución:
+```bash
+sudo chmod +x /usr/local/bin/docker-compose
+```
+
+Verifica que Docker Compose esté instalado correctamente:
+```bash
+docker-compose --version
+```
+
+#### Paso 8: Configurar el Acceso sin Sudo (Opcional)
+Para ejecutar Docker sin utilizar `sudo`, agrega tu usuario al grupo de Docker:
+```bash
+sudo usermod -aG docker $USER
+```
+Luego, cierra sesión y vuelve a iniciarla para que los cambios surtan efecto.
+
+#### Paso 9: Probar la Instalación
+Finalmente, ejecuta una prueba para confirmar que Docker está funcionando correctamente:
+```bash
+sudo docker run hello-world
+```
+
+### Puertos disponibles
+Para un correcto funcionamiento del proyecto se requiere tener libres los siguientes puertos: `8080` (Nginx), `3000` (Web App), `4000` (Auth Service), `5000` (System Status), `6380` (Redis).
 
 ## Estructura del proyecto
 
