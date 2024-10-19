@@ -3,9 +3,7 @@
 Este proyecto configura un entorno basado en Docker que incluye una aplicación web utilizando ElysiaJS con Bun, dos bases de datos PostgreSQL, un microservicio de autenticación, un microservicio de estado del sistema y una capa de caching con Redis, orquestados mediante Docker Compose.
 
 ## Diagrama del Proyecto
-```markdown
 ![Arquitectura del Proyecto](Arquitectura_del_proyecto_docker-compose.png)
-```
 
 ## Requisitos previos
 
