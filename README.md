@@ -2,6 +2,11 @@
 
 Este proyecto configura un entorno basado en Docker que incluye una aplicación web utilizando ElysiaJS con Bun, dos bases de datos PostgreSQL, un microservicio de autenticación, un microservicio de estado del sistema y una capa de caching con Redis, orquestados mediante Docker Compose.
 
+## Diagrama del Proyecto
+```markdown
+![Arquitectura del Proyecto](Arquitectura_del_proyecto_docker-compose.png)
+```
+
 ## Requisitos previos
 
 - Docker y Docker Compose instalados en el sistema.
@@ -97,8 +102,3 @@ La página principal está disponible en `http://localhost:8080/`. Para acceder 
 ## Notas adicionales
 - **Variables de entorno**: Las credenciales de base de datos y la clave JWT se configuran mediante variables de entorno en el archivo `docker-compose.yml`.
 - **Caching**: Redis se utiliza para almacenar datos en caché y mejorar la eficiencia de las consultas frecuentes.
-
-## Diagrama del Proyecto
-```markdown
-![Arquitectura del Proyecto](Arquitectura_del_project-docker-compose.png)
-```
