@@ -1,0 +1,101 @@
+version: '3'
+
+services:
+  web-app:
+    build:
+      context: ./elysia-web-app
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      DB_USER: elysia_user
+      DB_PASSWORD: elysia_password
+      DB_NAME: elysia_app
+      DB_HOST: postgres
+      DB_PORT: 5432
+      JWT_SECRET: mysecretkey
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    networks:
+      - elysia-network
+
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: elysia_user
+      POSTGRES_PASSWORD: elysia_password
+      POSTGRES_DB: elysia_app
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./elysia-web-app/init_web.sql:/docker-entrypoint-initdb.d/init_web.sql
+    networks:
+      - elysia-network
+
+  auth-service:
+    build:
+      context: ./auth-service
+      dockerfile: Dockerfile
+    ports:
+      - "4000:4000"
+    depends_on:
+      - auth-db
+    environment:
+      DB_USER: auth_user
+      DB_PASSWORD: auth_password
+      DB_NAME: auth_service
+      DB_HOST: auth-db
+      DB_PORT: 5432
+      JWT_SECRET: mysecretkey
+    networks:
+      - elysia-network
+
+  auth-db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: auth_user
+      POSTGRES_PASSWORD: auth_password
+      POSTGRES_DB: auth_service
+    volumes:
+      - auth_db_data:/var/lib/postgresql/data
+      - ./auth-service/init_auth.sql:/docker-entrypoint-initdb.d/init_auth.sql
+    networks:
+      - elysia-network
+
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - "8080:80"
+    depends_on:
+      - web-app
+      - auth-service
+    networks:
+      - elysia-network
+
+  system-status:
+    build:
+      context: ./system-status
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    networks:
+      - elysia-network
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6380:6379"
+    networks:
+      - elysia-network
+
+networks:
+  elysia-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  auth_db_data:

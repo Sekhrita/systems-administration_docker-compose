@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elysia App-web</title>
+</head>
+<body>
+  <h1>Aplicación básica con Elysia (web-app)</h1>
+  <h3>Bienvenido, {{username}}.</h3>
+
+  <h4>Conexión a la Base de datos (PostgreSQL):</h4>
+  <p>Resultado de un 'SELECT NOW();':</p>
+  <p>Hora actual del servidor: {{currentTime}}</p>
+
+  <h4>Conexión al Microservicio adicional:</h4>
+  <p>Estado del sistema:</p>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Servicio</th>
+        <th>Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{serviceStatus}}
+    </tbody>
+  </table>
+  <nav>
+    <a href="/logout">Logout</a>
+  </nav>
+</body>
+</html>
