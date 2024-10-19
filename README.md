@@ -67,19 +67,29 @@ El proyecto está compuesto por los siguientes servicios:
 
 ### 2. Auth Service
 - Registrar un usuario:
+  - Terminal:
   ```bash
   curl -X POST http://localhost:8080/auth/register -H "Content-Type: application/json" -d '{"username": "usuario", "password": "contraseña"}'
   ```
+  - Web:
+    Acceder a través de `http://localhost:8080/register` y completar el formulario.
+
 - Iniciar sesión:
+  - Terminal:
   ```bash
   curl -X POST http://localhost:8080/auth/login -H "Content-Type: application/json" -d '{"username": "usuario", "password": "contraseña"}'
   ```
+  - Web:
+    Acceder a través de `http://localhost:8080/login` y completar el formulario.
 
-### 3. System Status
+### 3. System Status (terminal)
 - Verificar el estado de los servicios:
+  - Terminal:
   ```bash
   curl http://localhost:8080/status
   ```
+  - Web:
+    Una vez logeado, se podra acceder a la página principal `http://localhost:8080/` donde aparecere la información en una tabla en caso de funcionar correctamente.
 
 ## Funcionamiento de la página web
 La página principal está disponible en `http://localhost:8080/`. Para acceder a ella, primero debe iniciar sesión. Si no está autenticado, será redirigido automáticamente a `/login`, donde podrá iniciar sesión o registrarse si no tiene una cuenta. Una vez autenticado, podrá acceder a `/`, donde se mostrará el resultado de un `SELECT NOW()` para verificar la conexión con la base de datos, junto con un mensaje de estado de los servicios del sistema.
@@ -88,9 +98,7 @@ La página principal está disponible en `http://localhost:8080/`. Para acceder 
 - **Variables de entorno**: Las credenciales de base de datos y la clave JWT se configuran mediante variables de entorno en el archivo `docker-compose.yml`.
 - **Caching**: Redis se utiliza para almacenar datos en caché y mejorar la eficiencia de las consultas frecuentes.
 
-## Agregar Diagrama del Proyecto
-Para agregar el diagrama al README, coloca la imagen en el directorio principal y utiliza la siguiente sintaxis:
-
+## Diagrama del Proyecto
 ```markdown
-![Arquitectura del Proyecto](./Arquitectura_del_project-docker-compose.png)
+![Arquitectura del Proyecto](Arquitectura_del_project-docker-compose.png)
 ```
